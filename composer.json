@@ -1,0 +1,23 @@
+{
+  "name": "rezouce/mailcatcher",
+  "description": "Simple API to use MailCatcher.",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Rezouce",
+      "email": "contact@rezouce.net"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "MailCatcher\\": "src"
+    }
+  },
+  "require": {
+    "guzzle/guzzle": "^3.9"
+  },
+  "require-dev": {
+    "phpspec/phpspec": "~2.1"
+  }
+}
