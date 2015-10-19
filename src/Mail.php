@@ -104,7 +104,7 @@ class Mail
             throw new MailException('This message has no HTML body.');
         }
 
-        return $this->mailCatcher->messageHtmlBody($this->id);
+        return $this->mailCatcher->messageHtml($this->id);
     }
 
     public function hasText()
@@ -118,7 +118,7 @@ class Mail
             throw new MailException('This message has no text body.');
         }
 
-        return $this->mailCatcher->messageTextBody($this->id);
+        return $this->mailCatcher->messageText($this->id);
     }
 
     public function attachments()

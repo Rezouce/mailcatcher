@@ -102,7 +102,7 @@ class MailSpec extends ObjectBehavior
     function it_should_return_its_html_body()
     {
         $this->mailCatcher->message('id')->willReturn(['formats' => ['html']]);
-        $this->mailCatcher->messageHtmlBody('id')->willReturn('body');
+        $this->mailCatcher->messageHtml('id')->willReturn('body');
 
         $this->html()->shouldReturn('body');
     }
@@ -124,7 +124,7 @@ class MailSpec extends ObjectBehavior
     function it_should_return_its_plain_body()
     {
         $this->mailCatcher->message('id')->willReturn(['formats' => ['plain']]);
-        $this->mailCatcher->messageTextBody('id')->willReturn('body');
+        $this->mailCatcher->messageText('id')->willReturn('body');
 
         $this->text()->shouldReturn('body');
     }

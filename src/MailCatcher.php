@@ -56,8 +56,10 @@ class MailCatcher
      */
     public function message($id)
     {
-        // TODO
-        return $id;
+        return $this->httpClient
+            ->get('/messages/' . $id . '.json')
+            ->send()
+            ->json();
     }
 
     /**
@@ -66,10 +68,11 @@ class MailCatcher
      * @param int $id
      * @return string
      */
-    public function messageHtmlBody($id)
+    public function messageHtml($id)
     {
-        // TODO
-        return $id;
+        return $this->httpClient
+            ->get('/messages/' . $id . '.html')
+            ->send();
     }
 
     /**
@@ -78,10 +81,11 @@ class MailCatcher
      * @param int $id
      * @return string
      */
-    public function messageTextBody($id)
+    public function messageText($id)
     {
-        // TODO
-        return $id;
+        return $this->httpClient
+            ->get('/messages/' . $id . '.plain')
+            ->send();
     }
 
     /**
@@ -93,7 +97,8 @@ class MailCatcher
      */
     public function messageAttachment($id, $cid)
     {
-        // TODO
-        return $cid;
+        return $this->httpClient
+            ->get('/messages/' . $id . '/' . $cid)
+            ->send();
     }
 }
