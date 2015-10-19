@@ -53,7 +53,7 @@ class MailCatcherSpec extends ObjectBehavior
         $this->client->setBaseUrl($this->url)->shouldBeCalled();
         $this->client->get('/messages')->willReturn($request);
         $request->send()->willReturn($response);
-        $response->json()->willReturn(json_encode($messages));
+        $response->json()->willReturn($messages);
 
         $result = $this->messages();
 
