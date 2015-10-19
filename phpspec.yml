@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: MailCatcher
+        psr4_prefix: MailCatcher
+        src_path: src
