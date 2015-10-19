@@ -15,7 +15,8 @@
     }
   },
   "require": {
-    "guzzle/guzzle": "^3.9"
+    "guzzle/guzzle": "^3.9",
+    "nesbot/carbon": "^1.20"
   },
   "require-dev": {
     "phpspec/phpspec": "~2.1"
