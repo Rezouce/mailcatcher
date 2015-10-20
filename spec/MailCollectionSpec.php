@@ -2,6 +2,7 @@
 
 namespace spec\MailCatcher;
 
+use MailCatcher\Mail;
 use MailCatcher\MailCatcherAdapter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -9,33 +10,25 @@ use Prophecy\Argument;
 class MailCollectionSpec extends ObjectBehavior
 {
 
-    function let(MailCatcherAdapter $mailCatcher)
+    function let(Mail $mail1, Mail $mail2)
     {
-        $messages = [
-            [
-                "id" => 1,
-                "sender" => "<test@example.com>",
-                "recipients" => ["<test@example.com>"],
-                "subject" => "Subject 1",
-                "size" => "404",
-                "created_at" => "2015-10-19T09:40:50.000+00:00",
-            ],
-            [
-                "id" => 2,
-                "sender" => "<test@example.com>",
-                "recipients" => ["<test@example.com>"],
-                "subject" => "Subject 2",
-                "size" => "404",
-                "created_at" => "2015-10-19T09:40:50.000+00:00",
-            ],
-        ];
+        $messages = [$mail1, $mail2];
+        $mail1->subject()->willReturn('Subject 1');
+        $mail2->subject()->willReturn('Subject 2');
 
-        $this->beConstructedWith($mailCatcher, $messages);
+        $this->beConstructedWith($messages);
     }
 
     function it_is_initializable()
     {
         $this->shouldHaveType('MailCatcher\MailCollection');
+    }
+
+    function it_should_throw_an_exception_if_something_else_than_mails_are_provided()
+    {
+        $this->beConstructedWith(['not a Mail']);
+
+        $this->shouldThrow('MailCatcher\MailCatcherException')->duringInstantiation();
     }
 
     function it_should_return_the_number_of_mails()
@@ -56,7 +49,7 @@ class MailCollectionSpec extends ObjectBehavior
 
     function it_should_throw_an_exception_when_trying_to_get_the_first_mail_of_an_empty_collection(MailCatcherAdapter $mailCatcher)
     {
-        $this->beConstructedWith($mailCatcher, []);
+        $this->beConstructedWith([]);
 
         $this->shouldThrow('MailCatcher\MailCatcherException')->duringFirst();
     }
@@ -68,7 +61,7 @@ class MailCollectionSpec extends ObjectBehavior
 
     function it_should_throw_an_exception_when_trying_to_get_the_last_mail_of_an_empty_collection(MailCatcherAdapter $mailCatcher)
     {
-        $this->beConstructedWith($mailCatcher, []);
+        $this->beConstructedWith([]);
 
         $this->shouldThrow('MailCatcher\MailCatcherException')->duringLast();
     }

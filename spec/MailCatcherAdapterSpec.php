@@ -36,7 +36,7 @@ class MailCatcherAdapterSpec extends ObjectBehavior
         $request->send()->willReturn($response);
         $response->json()->willReturn($this->getMessages());
 
-        $result = $this->messages()->shouldReturn($this->getMessages());
+        $this->messages()->shouldReturn($this->getMessages());
     }
 
     function it_should_remove_all_messages(EntityEnclosingRequestInterface $request)

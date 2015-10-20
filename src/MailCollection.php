@@ -5,41 +5,21 @@ namespace MailCatcher;
 class MailCollection implements \IteratorAggregate
 {
 
-    private $mailCatcher;
-
     private $mails = [];
 
     /**
-     * @param MailCatcherAdapter $mailCatcher
-     * @param array $messages
+     * @param array $mails
+     * @throws MailCatcherException
      */
-    public function __construct(MailCatcherAdapter $mailCatcher, array $messages)
+    public function __construct(array $mails)
     {
-        $this->mailCatcher = $mailCatcher;
-
-        foreach ($messages as $message) {
-            $this->mails[] = $this->createMail($mailCatcher, $message);
+        foreach ($mails as $mail) {
+            if (!$mail instanceof Mail) {
+                throw new MailCatcherException('You provided a value which is not a MailCatcher\Mail.');
+            }
         }
-    }
 
-    /**
-     * Create a mail from a MailCatcherAdapter message.
-     *
-     * @param MailCatcherAdapter $mailCatcher
-     * @param array $message
-     * @return Mail
-     */
-    private function createMail(MailCatcherAdapter $mailCatcher, array $message)
-    {
-        return new Mail(
-            $mailCatcher,
-            $message['id'],
-            $message['sender'],
-            $message['recipients'],
-            $message['subject'],
-            $message['size'],
-            $message['created_at']
-        );
+        $this->mails = $mails;
     }
 
     /**

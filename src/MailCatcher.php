@@ -18,7 +18,32 @@ class MailCatcher
      */
     public function messages()
     {
-        return new MailCollection($this->adapter, $this->adapter->messages());
+        $mails = [];
+
+        foreach ($this->adapter->messages() as $message) {
+            $mails[] = $this->createMail($message);
+        }
+
+        return new MailCollection($mails);
+    }
+
+    /**
+     * Create a mail from a MailCatcherAdapter message.
+     *
+     * @param array $message
+     * @return Mail
+     */
+    private function createMail(array $message)
+    {
+        return new Mail(
+            $this->adapter,
+            $message['id'],
+            $message['sender'],
+            $message['recipients'],
+            $message['subject'],
+            $message['size'],
+            $message['created_at']
+        );
     }
 
     /**
