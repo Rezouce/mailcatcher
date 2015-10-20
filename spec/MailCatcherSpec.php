@@ -35,11 +35,11 @@ class MailCatcherSpec extends ObjectBehavior
         $result->first()->subject()->shouldReturn('Subject 1');
     }
 
-    function it_should_remove_emails()
+    function it_should_remove_messages()
     {
-        $this->adapter->removeEmails()->shouldBeCalled();
+        $this->adapter->removeMessages()->shouldBeCalled();
 
-        $result = $this->removeEmails();
+        $result = $this->removeMessages();
     }
 
     /**

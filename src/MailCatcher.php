@@ -22,10 +22,10 @@ class MailCatcher
     }
 
     /**
-     * Remove all emails.
+     * Remove all messages.
      */
-    public function removeEmails()
+    public function removeMessages()
     {
-        $this->adapter->removeEmails();
+        $this->adapter->removeMessages();
     }
 }

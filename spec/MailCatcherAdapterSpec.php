@@ -39,13 +39,13 @@ class MailCatcherAdapterSpec extends ObjectBehavior
         $result = $this->messages()->shouldReturn($this->getMessages());
     }
 
-    function it_should_remove_all_emails(EntityEnclosingRequestInterface $request)
+    function it_should_remove_all_messages(EntityEnclosingRequestInterface $request)
     {
         $this->client->setBaseUrl($this->url)->shouldBeCalled();
         $this->client->delete('/messages')->willReturn($request);
         $request->send()->shouldBeCalled();
 
-        $this->removeEmails();
+        $this->removeMessages();
     }
 
     function it_should_return_a_message(RequestInterface $request, Response $response)

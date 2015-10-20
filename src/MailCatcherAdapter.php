@@ -39,7 +39,7 @@ class MailCatcherAdapter
     /**
      * Remove all emails.
      */
-    public function removeEmails()
+    public function removeMessages()
     {
         $this->httpClient
             ->delete('/messages')
