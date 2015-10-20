@@ -58,7 +58,7 @@ class MailCollectionSpec extends ObjectBehavior
     {
         $this->beConstructedWith($mailCatcher, []);
 
-        $this->shouldThrow('MailCatcher\MailException')->duringFirst();
+        $this->shouldThrow('MailCatcher\MailCatcherException')->duringFirst();
     }
 
     function it_should_return_its_last_mail()
@@ -70,7 +70,7 @@ class MailCollectionSpec extends ObjectBehavior
     {
         $this->beConstructedWith($mailCatcher, []);
 
-        $this->shouldThrow('MailCatcher\MailException')->duringLast();
+        $this->shouldThrow('MailCatcher\MailCatcherException')->duringLast();
     }
 
     function it_should_return_its_n_mail()
@@ -80,6 +80,6 @@ class MailCollectionSpec extends ObjectBehavior
 
     function it_should_throw_an_exception_when_trying_to_get_a_mail_not_in_the_collection()
     {
-        $this->shouldThrow('MailCatcher\MailException')->duringGet(2);
+        $this->shouldThrow('MailCatcher\MailCatcherException')->duringGet(2);
     }
 }

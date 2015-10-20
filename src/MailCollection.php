@@ -56,12 +56,12 @@ class MailCollection implements \IteratorAggregate
      * Get the first mail.
      *
      * @return Mail
-     * @throws MailException
+     * @throws MailCatcherException
      */
     public function first()
     {
         if (empty($this->mails)) {
-            throw new MailException('There is no email in this collection.');
+            throw new MailCatcherException('There is no email in this collection.');
         }
 
         return $this->mails[0];
@@ -71,12 +71,12 @@ class MailCollection implements \IteratorAggregate
      * Get the last mail.
      *
      * @return Mail
-     * @throws MailException
+     * @throws MailCatcherException
      */
     public function last()
     {
         if (empty($this->mails)) {
-            throw new MailException('There is no email in this collection.');
+            throw new MailCatcherException('There is no email in this collection.');
         }
 
         return end($this->mails);
@@ -87,12 +87,12 @@ class MailCollection implements \IteratorAggregate
      *
      * @param int $number
      * @return Mail
-     * @throws MailException
+     * @throws MailCatcherException
      */
     public function get($number)
     {
         if (count($this->mails) < $number + 1) {
-            throw new MailException(
+            throw new MailCatcherException(
                 sprintf('You tried to get the %s when there is only %s emails.', $number, count($this->mails))
             );
         }

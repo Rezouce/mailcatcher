@@ -26,7 +26,7 @@ class MailCatcher
     /**
      * Get all messages.
      *
-     * @return mixed
+     * @return MailCollection
      */
     public function messages()
     {
