@@ -64,7 +64,7 @@ class Mail
      * Get the message data.
      * @return array
      */
-    private function message()
+    private function retrieveMessage()
     {
         if (null === $this->message) {
             $this->message = $this->mailCatcher->message($this->id);
@@ -75,27 +75,27 @@ class Mail
 
     public function type()
     {
-        return $this->message()['type'];
+        return $this->retrieveMessage()['type'];
     }
 
     public function formats()
     {
-        return $this->message()['formats'];
+        return $this->retrieveMessage()['formats'];
     }
 
     public function hasSource()
     {
-        return in_array('source', $this->message()['formats']);
+        return in_array('source', $this->retrieveMessage()['formats']);
     }
 
     public function source()
     {
-        return $this->message()['source'];
+        return $this->retrieveMessage()['source'];
     }
 
     public function hasHtml()
     {
-        return in_array('html', $this->message()['formats']);
+        return in_array('html', $this->retrieveMessage()['formats']);
     }
 
     public function html()
@@ -109,7 +109,7 @@ class Mail
 
     public function hasText()
     {
-        return in_array('plain', $this->message()['formats']);
+        return in_array('plain', $this->retrieveMessage()['formats']);
     }
 
     public function text()
@@ -125,7 +125,7 @@ class Mail
     {
         $attachments = [];
 
-        foreach ($this->message()['attachments'] as $cid) {
+        foreach ($this->retrieveMessage()['attachments'] as $cid) {
             $attachments[] = $this->mailCatcher->messageAttachment($this->id, $cid);
         }
 
