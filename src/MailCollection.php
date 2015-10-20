@@ -89,4 +89,15 @@ class MailCollection implements \IteratorAggregate
     {
         return new \ArrayIterator($this->mails);
     }
+
+    /**
+     * Filter the collection.
+     *
+     * @param \Closure $filter
+     * @return static
+     */
+    public function filter(\Closure $filter)
+    {
+        return new static(array_filter($this->mails, $filter));
+    }
 }

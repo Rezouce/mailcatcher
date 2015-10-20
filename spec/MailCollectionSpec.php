@@ -75,4 +75,14 @@ class MailCollectionSpec extends ObjectBehavior
     {
         $this->shouldThrow('MailCatcher\MailCatcherException')->duringGet(2);
     }
+
+    function it_should_filter_its_mails()
+    {
+        $collection = $this->filter(function(Mail $mail) {
+            return $mail->subject() == 'Subject 1';
+        });
+
+        $collection->count()->shouldReturn(1);
+        $collection->first()->subject()->shouldReturn('Subject 1');
+    }
 }
