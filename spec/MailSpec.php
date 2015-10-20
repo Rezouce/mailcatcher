@@ -2,17 +2,17 @@
 
 namespace spec\MailCatcher;
 
-use MailCatcher\MailCatcher;
+use MailCatcher\MailCatcherAdapter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class MailSpec extends ObjectBehavior
 {
 
-    /** @var MailCatcher */
+    /** @var MailCatcherAdapter */
     private $mailCatcher;
 
-    function let(MailCatcher $mailCatcher)
+    function let(MailCatcherAdapter $mailCatcher)
     {
         $this->mailCatcher = $mailCatcher;
 

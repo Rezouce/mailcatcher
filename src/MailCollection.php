@@ -10,10 +10,10 @@ class MailCollection implements \IteratorAggregate
     private $mails = [];
 
     /**
-     * @param MailCatcher $mailCatcher
+     * @param MailCatcherAdapter $mailCatcher
      * @param array $messages
      */
-    public function __construct(MailCatcher $mailCatcher, array $messages)
+    public function __construct(MailCatcherAdapter $mailCatcher, array $messages)
     {
         $this->mailCatcher = $mailCatcher;
 
@@ -23,13 +23,13 @@ class MailCollection implements \IteratorAggregate
     }
 
     /**
-     * Create a mail from a MailCatcher message.
+     * Create a mail from a MailCatcherAdapter message.
      *
-     * @param MailCatcher $mailCatcher
+     * @param MailCatcherAdapter $mailCatcher
      * @param array $message
      * @return Mail
      */
-    private function createMail(MailCatcher $mailCatcher, array $message)
+    private function createMail(MailCatcherAdapter $mailCatcher, array $message)
     {
         return new Mail(
             $mailCatcher,

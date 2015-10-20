@@ -6,7 +6,7 @@ use Carbon\Carbon;
 class Mail
 {
 
-    /** @var MailCatcher */
+    /** @var MailCatcherAdapter */
     private $mailCatcher;
 
     private $id;
@@ -24,7 +24,7 @@ class Mail
     /** @var array */
     private $message;
 
-    public function __construct(MailCatcher $mailCatcher, $id, $sender, array $recipients, $subject, $size, $createdAt)
+    public function __construct(MailCatcherAdapter $mailCatcher, $id, $sender, array $recipients, $subject, $size, $createdAt)
     {
         $this->mailCatcher = $mailCatcher;
         $this->id = $id;

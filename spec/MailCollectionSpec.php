@@ -2,14 +2,14 @@
 
 namespace spec\MailCatcher;
 
-use MailCatcher\MailCatcher;
+use MailCatcher\MailCatcherAdapter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class MailCollectionSpec extends ObjectBehavior
 {
 
-    function let(MailCatcher $mailCatcher)
+    function let(MailCatcherAdapter $mailCatcher)
     {
         $messages = [
             [
@@ -54,7 +54,7 @@ class MailCollectionSpec extends ObjectBehavior
         $this->first()->subject()->shouldReturn('Subject 1');
     }
 
-    function it_should_throw_an_exception_when_trying_to_get_the_first_mail_of_an_empty_collection(MailCatcher $mailCatcher)
+    function it_should_throw_an_exception_when_trying_to_get_the_first_mail_of_an_empty_collection(MailCatcherAdapter $mailCatcher)
     {
         $this->beConstructedWith($mailCatcher, []);
 
@@ -66,7 +66,7 @@ class MailCollectionSpec extends ObjectBehavior
         $this->last()->subject()->shouldReturn('Subject 2');
     }
 
-    function it_should_throw_an_exception_when_trying_to_get_the_last_mail_of_an_empty_collection(MailCatcher $mailCatcher)
+    function it_should_throw_an_exception_when_trying_to_get_the_last_mail_of_an_empty_collection(MailCatcherAdapter $mailCatcher)
     {
         $this->beConstructedWith($mailCatcher, []);
 
