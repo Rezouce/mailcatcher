@@ -2,10 +2,8 @@
 
 namespace spec\MailCatcher;
 
-use Guzzle\Http\ClientInterface;
-use Guzzle\Http\Message\EntityEnclosingRequestInterface;
-use Guzzle\Http\Message\RequestInterface;
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\ClientInterface;
+use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -15,13 +13,11 @@ class MailCatcherAdapterSpec extends ObjectBehavior
     /** @var ClientInterface */
     private $client;
 
-    private $url = 'http://url-to-mailcatcher.com';
-
     function let(ClientInterface $client)
     {
         $this->client = $client;
 
-        $this->beConstructedWith($client, $this->url);
+        $this->beConstructedWith($client);
     }
 
     function it_is_initializable()
@@ -29,58 +25,49 @@ class MailCatcherAdapterSpec extends ObjectBehavior
         $this->shouldHaveType('MailCatcher\MailCatcherAdapter');
     }
 
-    function it_should_return_some_messages(RequestInterface $request, Response $response)
+    function it_should_return_some_messages(ResponseInterface $response)
     {
-        $this->client->setBaseUrl($this->url)->shouldBeCalled();
-        $this->client->get('/messages')->willReturn($request);
-        $request->send()->willReturn($response);
-        $response->json()->willReturn($this->getMessages());
+        $this->client->request('GET', '/messages')->willReturn($response);
+        $response->getBody()->willReturn(json_encode($this->getMessages()));
 
         $this->messages()->shouldReturn($this->getMessages());
     }
 
-    function it_should_remove_all_messages(EntityEnclosingRequestInterface $request)
+    function it_should_remove_all_messages()
     {
-        $this->client->setBaseUrl($this->url)->shouldBeCalled();
-        $this->client->delete('/messages')->willReturn($request);
-        $request->send()->shouldBeCalled();
+        $this->client->request('DELETE', '/messages')->shouldBeCalled();
 
         $this->removeMessages();
     }
 
-    function it_should_return_a_message(RequestInterface $request, Response $response)
+    function it_should_return_a_message(ResponseInterface $response)
     {
-        $this->client->setBaseUrl($this->url)->shouldBeCalled();
-        $this->client->get('/messages/id.json')->willReturn($request);
-        $request->send()->willReturn($response);
-        $response->json()->willReturn(['message']);
+        $this->client->request('GET', '/messages/id.json')->willReturn($response);
+        $response->getBody()->willReturn(json_encode(['message']));
 
         $this->message('id')->shouldReturn(['message']);
     }
 
-    function it_should_return_a_message_body_html(RequestInterface $request)
+    function it_should_return_a_message_body_html(ResponseInterface $response)
     {
-        $this->client->setBaseUrl($this->url)->shouldBeCalled();
-        $this->client->get('/messages/id.html')->willReturn($request);
-        $request->send()->willReturn('html');
+        $this->client->request('GET', '/messages/id.html')->willReturn($response);
+        $response->getBody()->willReturn('html');
 
         $this->messageHtml('id')->shouldReturn('html');
     }
 
-    function it_should_return_a_message_body_text(RequestInterface $request)
+    function it_should_return_a_message_body_text(ResponseInterface $response)
     {
-        $this->client->setBaseUrl($this->url)->shouldBeCalled();
-        $this->client->get('/messages/id.plain')->willReturn($request);
-        $request->send()->willReturn('text');
+        $this->client->request('GET', '/messages/id.plain')->willReturn($response);
+        $response->getBody()->willReturn('text');
 
         $this->messageText('id')->shouldReturn('text');
     }
 
-    function it_should_return_a_message_attachment(RequestInterface $request)
+    function it_should_return_a_message_attachment(ResponseInterface $response)
     {
-        $this->client->setBaseUrl($this->url)->shouldBeCalled();
-        $this->client->get('/messages/id/cid')->willReturn($request);
-        $request->send()->willReturn('attachment');
+        $this->client->request('GET', '/messages/id/cid')->willReturn($response);
+        $response->getBody()->willReturn('attachment');
 
         $this->messageAttachment('id', 'cid')->shouldReturn('attachment');
     }

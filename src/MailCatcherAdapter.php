@@ -2,7 +2,7 @@
 
 namespace MailCatcher;
 
-use Guzzle\Http\ClientInterface;
+use GuzzleHttp\ClientInterface;
 
 class MailCatcherAdapter
 {
@@ -15,12 +15,10 @@ class MailCatcherAdapter
      * The URL should match the MailCatcherAdapter URL (port included).
      *
      * @param ClientInterface $httpClient
-     * @param string $url
      */
-    public function __construct(ClientInterface $httpClient, $url)
+    public function __construct(ClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
-        $this->httpClient->setBaseUrl(trim($url, '/'));
     }
 
     /**
@@ -30,10 +28,10 @@ class MailCatcherAdapter
      */
     public function messages()
     {
-        return $this->httpClient
-            ->get('/messages')
-            ->send()
-            ->json();
+        return json_decode(
+            $this->httpClient->request('GET', '/messages')->getBody(),
+            true
+        );
     }
 
     /**
@@ -41,9 +39,7 @@ class MailCatcherAdapter
      */
     public function removeMessages()
     {
-        $this->httpClient
-            ->delete('/messages')
-            ->send();
+        $this->httpClient->request('DELETE', '/messages');
     }
 
     /**
@@ -54,10 +50,10 @@ class MailCatcherAdapter
      */
     public function message($id)
     {
-        return $this->httpClient
-            ->get('/messages/' . $id . '.json')
-            ->send()
-            ->json();
+        return json_decode(
+            $this->httpClient->request('GET', '/messages/' . $id . '.json')->getBody(),
+            true
+        );
     }
 
     /**
@@ -68,9 +64,7 @@ class MailCatcherAdapter
      */
     public function messageHtml($id)
     {
-        return $this->httpClient
-            ->get('/messages/' . $id . '.html')
-            ->send();
+        return $this->httpClient->request('GET', '/messages/' . $id . '.html')->getBody();
     }
 
     /**
@@ -81,9 +75,7 @@ class MailCatcherAdapter
      */
     public function messageText($id)
     {
-        return $this->httpClient
-            ->get('/messages/' . $id . '.plain')
-            ->send();
+        return $this->httpClient->request('GET', '/messages/' . $id . '.plain')->getBody();
     }
 
     /**
@@ -95,8 +87,6 @@ class MailCatcherAdapter
      */
     public function messageAttachment($id, $cid)
     {
-        return $this->httpClient
-            ->get('/messages/' . $id . '/' . $cid)
-            ->send();
+        return $this->httpClient->request('GET', '/messages/' . $id . '/' . $cid)->getBody();
     }
 }
